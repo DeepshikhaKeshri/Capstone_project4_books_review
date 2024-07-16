@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Book</title>
+    <link rel="stylesheet" href="/styles/add_book.css">
+</head>
+<body>
+    <%- include('partials/header', { sortBy: sortBy }) %>
+    <div class="container">
+        <h1>Update Book</h1>
+        <form action="/update-book/<%= book.isbn %>" method="POST">
+            <label for="title">Title:</label>
+            <input type="text" id="title" name="title" value="<%= book.title %>" required>
+            <label for="author">Author:</label>
+            <input type="text" id="author" name="author" value="<%= book.author %>" required>
+            <label for="reviews">Reviews:</label>
+            <input type="number" id="reviews" name="reviews" value="<%= book.reviews %>" required>
+            <label for="details">Details:</label>
+            <textarea id="details" name="details" required><%= book.details %></textarea>
+            <button type="submit">Update Book</button>
+        </form>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>

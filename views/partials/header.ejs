@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="nav-left">
+            <a href="/" class="logo"><img src="/images/bookicon.png" alt="Book Store Logo" class="book-icon"></a>
+        </nav>
+        <nav class="nav-right">
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/add-books">Add Books</a></li>
+                <li>
+                    <form id="sort-form" action="/" method="GET">
+                        <label for="sortBy" style="color: #fff; font-weight: bold; margin-right: 10px;">Sort by:</label>
+
+                        <select name="sortBy" id="sortBy" onchange="document.getElementById('sort-form').submit();">
+                            <option value="recency" <%= typeof sortBy !== 'undefined' && sortBy === 'recency' ? 'selected' : '' %>>Recency</option>
+                            <option value="reviews" <%= typeof sortBy !== 'undefined' && sortBy === 'reviews' ? 'selected' : '' %>>Reviews</option>
+                        </select>
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </header>
+</body>
+
+</html>

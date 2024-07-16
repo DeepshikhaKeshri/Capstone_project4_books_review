@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Reviews</title>
+    <link rel="stylesheet" href="/styles/style.css">
+</head>
+<body>
+    <%- include('partials/header') %>
+    <div class="container">
+        <h1>DEEPSHIKHA KESHRI</h1>
+        <h2>BOOKS I'VE READ</h2>
+        <p>Welcome to My Book Haven! Step into a world of literary wonders! This is my personal collection of books, where I share the joy of reading through reviews and ratings of the books I've devoured. Whether you're looking for the latest reads or the most talked-about books, you can easily sort the collection by recency or by the number of reviews.</p>
+        <p>And the adventure doesn't stop there! I'm constantly expanding my library. Feel free to explore the "Add Books" section, where you can add new titles to the collection with ease. Just provide the ISBN, title, author, number of reviews, and a few details to get started. Join me in celebrating the love for books and discovering new favorites in this cozy corner of the web. Happy reading!</p>
+        <div class="book-list">
+            <% books.forEach(book => { %>
+                <div class="book">
+                    <h3><%= book.title %></h3>
+                    <img src="<%= book.cover_image %>" alt="Book Cover">
+                    <p><strong>Author:</strong> <%= book.author %></p>
+                    <p><strong>How strongly I recommend it:</strong> <%= book.reviews %></p>
+                    <p><strong>Description:</strong> <%= book.details %></p>
+                    <p><strong>Uploaded On:</strong> <%= new Date(book.recency).toLocaleDateString('en-US', {
+                        day: 'numeric',
+                        month: 'short',
+                        year: 'numeric'
+                    }) %></p>
+                    <form action="/delete-book/<%= book.isbn %>" method="POST" style="display: inline;">
+                        <button type="submit">Delete</button>
+                    </form>
+                    <a href="/update-book/<%= book.isbn %>">
+                        <button type="button">Update</button>
+                    </a>
+                </div>
+            <% }); %>
+        </div>
+    </div>
+    <%- include('partials/footer') %>
+</body>
+</html>
