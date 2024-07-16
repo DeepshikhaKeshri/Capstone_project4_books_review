@@ -4,15 +4,15 @@ const { Pool } = require('pg');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000; // Use environment port or default to 3000
 
 // Database connection
 const pool = new Pool({
     user: 'postgres',
-    host: 'localhost',
-    database: 'book_reviews',
-    password: 'shikha42',
-    port: 5432,
+    host: process.env.DB_HOST || 'localhost', // Update for remote hosting
+    database: process.env.DB_NAME || 'book_reviews',
+    password: process.env.DB_PASSWORD || 'shikha42', // Use environment variables for sensitive info
+    port: process.env.DB_PORT || 5432,
 });
 
 // Set the view engine to EJS
@@ -101,7 +101,7 @@ app.get('/update-book/:isbn', async (req, res) => {
         const result = await pool.query(bookQuery, [isbn]);
 
         if (result.rows.length > 0) {
-            res.render('update_book', { book: result.rows[0], sortBy: 'recency' }); // Default sortBy value
+            res.render('update_book', { book: result.rows[0], sortBy: 'recency' });
         } else {
             res.redirect('/');
         }
@@ -138,13 +138,8 @@ app.post('/delete-book/:isbn', async (req, res) => {
     const { isbn } = req.params;
 
     try {
-        const deleteCoverQuery = 'DELETE FROM book_covers WHERE isbn = $1';
-        await pool.query(deleteCoverQuery, [isbn]);
-        
-        const deleteBookQuery = 'DELETE FROM books WHERE isbn = $1';
-        await pool.query(deleteBookQuery, [isbn]);
-
-        
+        await pool.query('DELETE FROM book_covers WHERE isbn = $1', [isbn]);
+        await pool.query('DELETE FROM books WHERE isbn = $1', [isbn]);
 
         res.redirect('/');
     } catch (error) {
