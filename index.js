@@ -8,11 +8,14 @@ const port = process.env.PORT || 3000; // Use environment port or default to 300
 
 // Database connection
 const pool = new Pool({
-    user: 'postgres',
-    host: process.env.DB_HOST || 'localhost', // Update for remote hosting
+    user: process.env.DB_USER || 'postgres',
+    host: process.env.DB_HOST || 'localhost',
     database: process.env.DB_NAME || 'book_reviews',
-    password: process.env.DB_PASSWORD || 'shikha42', // Use environment variables for sensitive info
+    password: process.env.DB_PASSWORD || 'shikha42',
     port: process.env.DB_PORT || 5432,
+    ssl: {
+        rejectUnauthorized: false, // Adjust this based on your database host's SSL requirements
+    },
 });
 
 // Set the view engine to EJS
