@@ -5,17 +5,15 @@ const { Pool } = require('pg');
 const path = require('path');
 
 const app = express();
-const port = process.env.PORT || 3000; // Use environment port or default to 3000
+const port = parseInt(process.env.PORT, 10) || 3000; // Use environment port or default to 3000
 
 const pool = new Pool({
     user: process.env.DB_USER,
     host: process.env.DB_HOST,
     database: process.env.DB_NAME,
     password: process.env.DB_PASSWORD,
-    port: process.env.DB_PORT,
-    ssl: {
-        rejectUnauthorized: false, // Adjust this based on your database host's SSL requirements
-    },
+    port: parseInt(process.env.DB_PORT, 10),
+    ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false,
 });
 
 // Set the view engine to EJS
@@ -150,12 +148,6 @@ app.post('/delete-book/:isbn', async (req, res) => {
         res.redirect('/');
     }
 });
-
-// Export the app for Vercel
-module.exports = app;
-
-if (require.main === module) {
-    app.listen(port, () => {
-        console.log(`Server running at http://localhost:${port}`);
-    });
-}
+app.listen(port, () => {
+    console.log(`Server running at http://localhost:${port}`);
+});
