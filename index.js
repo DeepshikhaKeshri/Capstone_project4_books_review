@@ -6,6 +6,13 @@ const path = require('path');
 
 const app = express();
 const port = parseInt(process.env.PORT, 10) || 3000; // Use environment port or default to 3000
+console.log('Connecting to DB with:', {
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+  });
+  
 
 const pool = new Pool({
     user: process.env.DB_USER,
