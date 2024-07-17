@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const axios = require('axios');
 const { Pool } = require('pg');
@@ -6,17 +7,19 @@ const path = require('path');
 const app = express();
 const port = process.env.PORT || 3000; // Use environment port or default to 3000
 
-// Database connection
+
 const pool = new Pool({
-    user: process.env.DB_USER || 'postgres',
-    host: process.env.DB_HOST || 'localhost',
-    database: process.env.DB_NAME || 'book_reviews',
-    password: process.env.DB_PASSWORD || 'shikha42',
-    port: process.env.DB_PORT || 5432,
+    user: process.env.DB_USER,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
+    password: process.env.DB_PASSWORD,
+    port: process.env.DB_PORT,
     ssl: {
         rejectUnauthorized: false, // Adjust this based on your database host's SSL requirements
     },
 });
+
+module.exports = pool;
 
 // Set the view engine to EJS
 app.set('view engine', 'ejs');
